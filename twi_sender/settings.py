@@ -96,8 +96,10 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS += ("djcelery", )
 
 #BROKER_URL = 'redis://localhost:6379/0'
+# CELERY SETTINGS
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+#CELERY_RESULT_SERIALIZER = 'json'
 BROKER_URL = 'redis+socket:///tmp/redis.sock'
-CELERY_RESULT_BACKEND = 'redis+socket:///tmp/redis.sock'
-CELERYBEAT_SCHEDULER="djcelery.schedulers.DatabaseScheduler"
-CELERY_ALWAYS_EAGER=False
+#CELERY_RESULT_BACKEND = 'redis+socket:///tmp/redis.sock'
 

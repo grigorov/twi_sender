@@ -1,3 +1,7 @@
 from django.contrib import admin
+from sender.models import TwitterAccount
 
-# Register your models here.
+class TwitterAdmin(admin.ModelAdmin):
+    list_display = ['name','active','id_twitter']
+
+admin.site.register(TwitterAccount, TwitterAdmin)

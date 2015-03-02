@@ -15,6 +15,11 @@ app = Celery('twi_sender')
 # pickle the object when using Windows.
 app.config_from_object('django.conf:settings')
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
+app.conf.update(
+    CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend',
+)
+from kombu import serialization
+serialization.registry._decoders.pop("application/x-python-serialize")
 
 @app.task(bind=True)
 def debug_task(self):
