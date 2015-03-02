@@ -24,7 +24,9 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'localhost',
+]
 
 
 # Application definition
@@ -36,6 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sender',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -66,9 +69,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.7/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-RU'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -81,3 +84,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
+
+MEDIA_URL = '/uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'uploads')
+
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+
+INSTALLED_APPS += ("djcelery", )
+
+#BROKER_URL = 'redis://localhost:6379/0'
+BROKER_URL = 'redis+socket:///tmp/redis.sock'
+CELERY_RESULT_BACKEND = 'redis+socket:///tmp/redis.sock'
+CELERYBEAT_SCHEDULER="djcelery.schedulers.DatabaseScheduler"
+CELERY_ALWAYS_EAGER=False
+
