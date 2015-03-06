@@ -22,4 +22,16 @@ def follow_all(source, destination):
         except tweepy.TweepError as e:
             print(e)
 
-
+@shared_task
+def retweet(id_status, destination):
+    destination_auth = tweepy.OAuthHandler(destination.consumer_key, destination.consumer_secret)
+    destination_auth.set_access_token(destination.access_token, destination.access_token_secret)
+    try:
+        destination_api = tweepy.API(destination_auth)
+        destination_api.retweet(id_status)
+    except tweepy.TweepError as e:
+        print(e)
+@shared_task
+def mass_retweet(objects, id_status):
+    for obj in objects:
+        retweet.delay(id_status=id_status, destination=obj)
